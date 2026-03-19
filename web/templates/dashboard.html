@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Web Threat Intel Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛡️ Dark Web Threat Intelligence</h1>
+            <div class="status-indicator">
+                <span class="dot blinking"></span> System Active
+            </div>
+        </header>
+
+        <main>
+            <section class="kpi-cards">
+                <div class="card">
+                    <h3>Total Pages Crawled</h3>
+                    <p id="total-crawled" class="kpi-value">--</p>
+                </div>
+                <div class="card">
+                    <h3>Threats Detected</h3>
+                    <p id="threats-detected" class="kpi-value warning">--</p>
+                </div>
+                <div class="card">
+                    <h3>Active Alerts</h3>
+                    <p id="active-alerts" class="kpi-value danger">--</p>
+                </div>
+            </section>
+
+            <section class="data-panels">
+                <div class="panel chart-container">
+                    <h3>Top Threat Keywords</h3>
+                    <canvas id="keywordChart"></canvas>
+                </div>
+                
+                <div class="panel list-container">
+                    <h3>Recent Alerts</h3>
+                    <ul id="alert-list" class="alert-list">
+                        <!-- Populated via JS -->
+                    </ul>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

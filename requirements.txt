@@ -1,0 +1,9 @@
+requests
+requests[socks]
+beautifulsoup4
+pymongo
+elasticsearch
+scikit-learn
+pandas
+flask
+schedule
