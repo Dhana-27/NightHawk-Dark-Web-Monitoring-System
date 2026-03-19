@@ -8,12 +8,14 @@ class ESStorage:
         Initializes Elasticsearch connection.
         """
         self.index_name = index_name
+        self.connected = False
         try:
-            self.es = Elasticsearch(hosts)
+            self.es = Elasticsearch(hosts, max_retries=0, request_timeout=2)
             if not self.es.ping():
                 logging.error("Elasticsearch ping failed. Is the server running?")
             else:
                 logging.info(f"Connected to Elasticsearch")
+                self.connected = True
                 self._create_index()
         except Exception as e:
             logging.error(f"Failed to connect to Elasticsearch: {e}")
@@ -50,6 +52,9 @@ class ESStorage:
         Indexes a document for quick search and analysis.
         doc_id could be the content_hash from MongoDB.
         """
+        if not self.connected:
+            return False
+            
         try:
             res = self.es.index(index=self.index_name, id=doc_id, document=data)
             logging.info(f"Document indexed in ES: {res['result']}")

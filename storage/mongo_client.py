@@ -8,8 +8,10 @@ class MongoStorage:
         Initializes MongoDB connection.
         Make sure MongoDB is running locally or provide a remote URI.
         """
+        self.connected = False
         try:
-            self.client = MongoClient(uri, serverSelectionTimeoutMS=5000)
+            self.client = MongoClient(uri, serverSelectionTimeoutMS=2000)
+            self.client.admin.command('ping')
             self.db = self.client[db_name]
             self.collection = self.db['raw_crawls']
             
@@ -17,6 +19,7 @@ class MongoStorage:
             self.collection.create_index("content_hash", unique=True)
             self.collection.create_index("url")
             
+            self.connected = True
             logging.info(f"Connected to MongoDB: {db_name}")
         except Exception as e:
             logging.error(f"Failed to connect to MongoDB: {e}")
@@ -26,6 +29,9 @@ class MongoStorage:
         Inserts a documented into the raw_crawls collection.
         Expects a dict with: url, content_hash, html, parsed_text, timestamp, etc.
         """
+        if not self.connected:
+            return False
+            
         try:
             # Check if hash already exists
             if self.collection.find_one({"content_hash": data.get("content_hash")}):
