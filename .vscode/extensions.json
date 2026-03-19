@@ -1,0 +1,12 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.debugpy",
+        "mongodb.mongodb-vscode",
+        "ecmel.vscode-html-css",
+        "ritwickdey.LiveServer",
+        "esbenp.prettier-vscode",
+        "redhat.vscode-yaml"
+    ]
+}
